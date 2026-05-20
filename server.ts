@@ -342,8 +342,18 @@ async function startServer() {
     app.use(express.static('dist'));
   }
 
-  app.listen(PORT, '0.0.0.0', () => {
+  const server = app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on http://localhost:${PORT}`);
+  });
+
+  server.on('error', (err: NodeJS.ErrnoException) => {
+    if (err.code === 'EADDRINUSE') {
+      console.error(
+        `\nPort ${PORT} is already in use. Another "npm run start" is still running — stop it with Ctrl+C in that terminal (or kill the process), then try again.\n`
+      );
+      process.exit(1);
+    }
+    throw err;
   });
 }
 

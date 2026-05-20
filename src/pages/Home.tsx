@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import ProductCard from '../components/ProductCard';
+import { ParticleTerrain } from '../components/ParticleTerrain';
 
 export default function Home() {
   const [products, setProducts] = useState([]);
@@ -18,13 +19,21 @@ export default function Home() {
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
       <section className="relative h-[70vh] bg-black overflow-hidden">
-        <img
-          src="https://picsum.photos/seed/fashionhero/1920/1080"
-          alt="Hero Fashion"
-          className="absolute inset-0 w-full h-full object-cover opacity-60"
+        {/* Cinematic procedural particle terrain — sits behind all content, ignores pointer events. */}
+        <ParticleTerrain
+          particleCount={15000}
+          size={26}
+          amplitude={0.95}
+          turbulence={0.4}
+          waveSpeed={0.07}
+          pointSize={3.4}
+          opacity={0.78}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
+
+        {/* Atmospheric vignette for text contrast — does not block clicks. */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/40" />
+
+        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tighter">
             NEW<br />ARRIVALS
           </h1>
